@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang=en >
+<head>
+
+<style type="text/css">
+	body{
+		background-color: #F9D08B;
+	}
+	#tutorial { 
+		margin: 16px;
+	    background-color: #82AFF9;
+	    width : 200px;
+	    border: 2px solid;
+    	border-radius: 25px;
+    	border-color: #9881F5;
+    	padding:10px;
+    	color:#29264E;
+-webkit-box-shadow: 4px 3px 38px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 4px 3px 38px 0px rgba(0,0,0,0.75);
+box-shadow: 4px 3px 38px 0px rgba(0,0,0,0.75);
+	}
+</style>
+
+<meta charset=utf-8 />
+</head>
+<body>
+<div id="result"></div>
+<div id="tutorial">
+	<div id="tutorial_Text"></div>
+	<div id="tutorial_quality"></div>
+	<div id="tutorial_pic"></div>
+</div>
+<div style = "width:10px" id="info"></div>
+<script src=http://js.leapmotion.com/leap-0.6.3.js ></script>
+<script src=http://js.leapmotion.com/leap-plugins-0.1.8.js ></script>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/TrackballControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script>
+
+	var fingerlings = [];
+	var handies = {};
+	var loop = {};
+	var test_done = true;
+var info, stats, renderer, scene, camera, controls
+
+
+/*
+
+//////////////////////////////////A
+var a1=[-40,0,40,0,0,80,40,0,40,-40,40,40,-40,40,40,0,40,40,-40,0,40,-40,0,0,0,40,0,-40,0,0,0,0,0,0,40,0,0,0,0,0,0,0,40,0,0,80,80,40,40,40,40,0,40,80,40,40,-40,40,40,-40,40,40,0,40,40,-80,40,40,-40,40,40,0,40,40,-80,40,0,-40,0,0,0,40,0,-40,0,0,-40,0,0,0];
+var a2=[-80,-40,0,-40,-40,40,0,-40,0,-80,0,0,-80,0,0,-40,0,0,-80,-40,0,-80,-40,-40,-40,0,-40,-80,-40,-40,-40,-40,-40,-40,0,-40,-40,-40,-40,-40,-40,-40,0,-40,-40,40,40,0,0,0,0,-40,0,40,0,0,-80,0,0,-80,0,0,-40,0,0,-120,0,0,-80,0,0,-40,0,0,-120,0,-40,-80,-40,-40,-40,0,-40,-80,-40,-40,-80,-40,-40,-40];
+
+var gesture121=[40,80,40,40,80,80,0,40,80,40,80,-40,40,80,-40,40,40,0,40,40,-80,40,40,-40,40,40,0,40,40,-80,40,0,-40,40,0,0,40,0,-40,40,0,-40,0,0,0,0,0,40,0,0,40,40,0,80,-80,40,-40,-40,40,0,0,40,40,-40,-40,0,-40,0,0,0,40,0,0,-40,0,0,0,0,40,40,0,0,-40,0,0,0,-40,40,0,0];
+var gesture122=[0,40,0,0,40,40,-40,0,40,0,40,-80,0,40,-80,0,0,-40,0,0,-120,0,0,-80,0,0,-40,0,0,-120,0,-40,-80,0,-40,-40,0,-40,-80,0,-40,-80,-40,-40,-40,-40,-40,0,-40,-40,0,0,-40,40,-120,0,-80,-80,0,-40,-40,0,0,-80,-80,-40,-80,-40,-40,-40,0,-40,-40,-80,-40,-40,-40,-40,0,0,-40,-40,-80,-40,-40,-40,-80,0,-40,-40];
+	
+
+var gesture131=[80,80,40,40,40,40,40,0,80,40,40,-40,40,40,-40,40,40,0,40,40,-80,40,40,-40,40,40,0,0,0,-80,0,0,-40,0,0,0,0,0,-40,0,0,-40,0,0,0,0,0,-40,40,0,0,80,0,0,0,0,-40,0,0,-40,0,40,0,-40,80,0,-40,80,0,0,40,0,0,0,0,-40,0,0,0,40,40,0,0,0,-40,0,40,0,0,40];
+var gesture132=[40,40,0,0,0,0,0,-40,40,0,0,-80,0,0,-80,0,0,-40,0,0,-120,0,0,-80,0,0,-40,-40,-40,-120,-40,-40,-80,-40,-40,-40,-40,-40,-80,-40,-40,-80,-40,-40,-40,-40,-40,-80,0,-40,-40,40,-40,-40,-40,-40,-80,-40,-40,-80,-40,0,-40,-80,40,-40,-80,40,-40,-40,0,-40,-40,-40,-40,-80,-40,-40,-40,0,0,-40,-40,-40,-80,-40,0,-40,-40,0];
+
+
+
+//////////////////////////////////B
+var b1=[-40,40,40,0,40,40,0,0,80,0,80,-40,0,80,0,0,40,0,-40,40,-40,0,40,-40,40,40,0,0,40,-40,0,40,-40,40,0,0,0,0,-40,0,0,-40,40,0,0,80,40,40,40,40,40,40,40,80,80,40,-40,40,40,-40,40,40,0,80,40,-40,40,40,-40,40,40,0,80,0,-40,40,0,-40,0,0,0,80,0,0,40,0,-40,0,0,0];
+var b2=[-80,0,0,-40,0,0,-40,-40,40,-40,40,-80,-40,40,-40,-40,0,-40,-80,0,-80,-40,0,-80,0,0,-40,-40,0,-80,-40,0,-80,0,-40,-40,-40,-40,-80,-40,-40,-80,0,-40,-40,40,0,0,0,0,0,0,0,40,40,0,-80,0,0,-80,0,0,-40,40,0,-80,0,0,-80,0,0,-40,40,-40,-80,0,-40,-80,-40,-40,-40,40,-40,-40,0,-40,-80,-40,-40,-40];
+
+*/
+
+
+
+
+var g_a=[56,56,56,51,45];
+
+var g_b=[46,85,92,85,69];
+
+var g_c = [58,78,84,77,61];
+
+
+var g_d = [49,84,68,61,51];
+
+var g_e = [63,52,52,48,45];
+
+var g_f = [49,76,92,86,76];
+
+
+
+var g_g=[61,93,70,63,61];
+var g_h=[46,85,91,66,55];
+
+var g_i=[54,64,64,57,76];
+var g_j=[54,64,64,57,76];
+var g_k=[49,88,90,69,57];
+var g_l=[84,88,49,42,39];
+var g_m=[49,65,67,69,57];
+
+var g_n=[44,54,56,56,46];
+var g_o=[59,75,77,70,59];
+var g_p=[66,83,78,40,38];
+var g_q=[71,81,53,49,42];
+var g_r=[49,78,84,50,43];
+var g_s=[55,52,50,52,46];
+
+var g_t=[40,68,68,63,53];
+var g_u=[48,85,91,63,56];
+
+var g_v=[45,92,94,69,57];
+var g_w=[41,85,90,86,60];
+
+var g_x=[57,86,54,49,45];
+
+
+var g_y=[68,72,77,70,81];
+
+
+var g_z=[60,95,67,60,62];
+
+
+var tutorial_latters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+	var active_tutorial_index = 6;
+
+	init();
+
+
+
+	function init() {
+ 		
+ 		changeTutorial(0);
+
+		document.body.style.cssText = 'font: 600 12pt monospace; margin: 0; overflow: hidden;' ;
+
+
+		var info = document.getElementById('info');
+		//var info = document.body.appendChild( document.createElement( 'div' ) );
+
+		info.style.cssText = 'left: 20px; position: absolute; ';
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<div id=handData ></div>' +
+			'<div id=fingerData ></div>' +
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
+		camera.position.set( 500, 500, 500 );
+
+		controls = new THREE.TrackballControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+// ground box
+		var geometry = new THREE.BoxGeometry( 500, 2, 500 );
+		material = new THREE.MeshNormalMaterial();
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -1, 0 );
+		scene.add( mesh );
+
+		mesh = new THREE.GridHelper( 250, 10 );
+		scene.add( mesh );
+
+// axes
+		var axis = new THREE.AxisHelper( 250 );
+		scene.add( axis );
+
+		renderer.render( scene, camera );
+
+	}
+
+	loop.animate = function( frame ) {
+
+		var fingerString_fuck = Array(0);
+		frame.hands.forEach( function( hand, index ) {
+
+			var handy = ( handies[index] || ( handies[index] = new Handy()) );    
+			handy.outputData( index, hand );
+			var hand_index = index;
+			hand.fingers.forEach( function( finger, index ) {
+/*
+				if (!fingerlings[hand_index+index])
+					fingerlings[hand_index][index] = new Fingerling();
+				var fingerling  = fingerlings[hand_index][index];*/
+				var fingerling = ( fingerlings[index+(hand_index*10)] || ( fingerlings[index+(hand_index*10)] = new Fingerling() ) );  
+
+
+				//var sdds = convertAndNormalize(finger.dipPosition, hand.stabilizedPalmPosition);
+				fingerString_fuck.push(distance(finger.dipPosition, hand.stabilizedPalmPosition));
+				//fingerString_fuck.push(distance(finger.pipPosition, hand.stabilizedPalmPosition));
+				//fingerString_fuck.push(distance(finger.mcpPosition, hand.stabilizedPalmPosition));
+
+
+
+
+				fingerling.outputData( index, finger );
+
+			});
+
+		});
+
+		renderer.render( scene, camera );
+		controls.update();
+		stats.update();
+
+		var output = document.getElementById('output');
+
+
+		//result.innerHTML =fingerString_fuck;
+		//result.innerHTML = compareGestureDebug(gesture11,gesture12, fingerString_fuck);
+
+		//result.innerHTML = compareGestureDebug(gesture11,gesture12, fingerString_fuck);
+		//result.innerHTML ="";
+		
+		if (test_done)
+		{
+		  if(frame.valid && frame.gestures.length > 0){
+		    frame.gestures.forEach(function(gesture){
+		    	if (gesture.type == "swipe")
+		    	{
+		              
+		              	nextTutorial();
+		            	
+		            	return;
+		             
+
+		        }
+		    });
+		  }
+		}
+		else
+		{
+
+
+			var tutorial_quality = document.getElementById('tutorial_quality');
+
+			if (active_tutorial_index == 0)
+				var q_number = compareGesture(g_a,fingerString_fuck);
+			if (active_tutorial_index == 1)
+				var q_number = compareGesture(g_b,fingerString_fuck);
+			if (active_tutorial_index == 2)
+				var q_number = compareGesture(g_c,fingerString_fuck);
+			if (active_tutorial_index == 3)
+				var q_number = compareGesture(g_d,fingerString_fuck);
+			if (active_tutorial_index == 4)
+				var q_number = compareGesture(g_e,fingerString_fuck);
+			if (active_tutorial_index == 5)
+				var q_number = compareGesture(g_f,fingerString_fuck);
+			if (active_tutorial_index == 6)
+				var q_number = compareGesture(g_g,fingerString_fuck);
+			if (active_tutorial_index == 7)
+				var q_number = compareGesture(g_h,fingerString_fuck);
+			if (active_tutorial_index == 8)
+				var q_number = compareGesture(g_i,fingerString_fuck);
+			if (active_tutorial_index == 9)
+				var q_number = compareGesture(g_j,fingerString_fuck);
+			if (active_tutorial_index == 10)
+				var q_number = compareGesture(g_k,fingerString_fuck);
+			if (active_tutorial_index == 11)
+				var q_number = compareGesture(g_l,fingerString_fuck);
+			if (active_tutorial_index == 12)
+				var q_number = compareGesture(g_m,fingerString_fuck);
+			if (active_tutorial_index == 13)
+				var q_number = compareGesture(g_n,fingerString_fuck);
+			if (active_tutorial_index == 14)
+				var q_number = compareGesture(g_o,fingerString_fuck);
+			if (active_tutorial_index == 15)
+				var q_number = compareGesture(g_p,fingerString_fuck);
+			if (active_tutorial_index == 16)
+				var q_number = compareGesture(g_q,fingerString_fuck);
+			if (active_tutorial_index == 17)
+				var q_number = compareGesture(g_r,fingerString_fuck);
+			if (active_tutorial_index == 18)
+				var q_number = compareGesture(g_s,fingerString_fuck);
+			if (active_tutorial_index == 19)
+				var q_number = compareGesture(g_t,fingerString_fuck);
+			if (active_tutorial_index == 20)
+				var q_number = compareGesture(g_u,fingerString_fuck);
+			if (active_tutorial_index == 21)
+				var q_number = compareGesture(g_v,fingerString_fuck);
+			if (active_tutorial_index == 22)
+				var q_number = compareGesture(g_w,fingerString_fuck);
+			if (active_tutorial_index == 23)
+				var q_number = compareGesture(g_x,fingerString_fuck);
+			if (active_tutorial_index == 24)
+				var q_number = compareGesture(g_y,fingerString_fuck);
+			if (active_tutorial_index == 25)
+				var q_number = compareGesture(g_z,fingerString_fuck);
+		
+
+
+			//tutorial_quality.innerHTML = q_number;
+			
+			if ( q_number > 25)
+				tutorial_quality.innerHTML = "<h1 style='color: red;'>Bad</h1>";
+			else if ( q_number > 15)
+				tutorial_quality.innerHTML = "<h1 style='color: yellow;'>Close</h1>";
+			else
+			{
+				test_done = true;
+				tutorial_quality.innerHTML = "<h1 style='color: green;'>Excellent</h1>";
+			}
+
+		}
+
+
+		
+
+	}
+
+	loop = Leap.loop( loop.animate );
+	loop.use( 'screenPosition', { scale: 0.25 } ); // use = plugin
+
+	var Handy = function() {
+		var handy = this;
+		
+		var geometry = new THREE.BoxGeometry( 50, 20, 50 );
+		var material = new THREE.MeshNormalMaterial();
+		var box = new THREE.Mesh( geometry, material );
+		scene.add( box );
+
+		handy.outputData = function( index, hand  ) {
+
+			
+			box.position.set( hand.stabilizedPalmPosition[0], hand.stabilizedPalmPosition[1], hand.stabilizedPalmPosition[2] );
+
+			box.rotation.set( hand.pitch(), -hand.yaw(), hand.roll() );
+
+		};
+
+	};
+
+// Finger Method
+	var Fingerling = function() {
+
+		var fingerling = this;
+		var msg = fingerData.appendChild( document.createElement( 'div' ) );
+
+		var tip = addPhalange();
+		var dip = addPhalange();
+		var pip = addPhalange();
+		var mcp = addPhalange();
+		var carp = addPhalange();
+
+		fingerling.outputData = function( index, finger ) {
+
+
+			tip.position.set( finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2] );
+			dip.position.set( finger.dipPosition[0], finger.dipPosition[1], finger.dipPosition[2] );
+			pip.position.set( finger.pipPosition[0], finger.pipPosition[1], finger.pipPosition[2] );
+			mcp.position.set( finger.mcpPosition[0], finger.mcpPosition[1], finger.mcpPosition[2] );
+			carp.position.set( finger.carpPosition[0], finger.carpPosition[1], finger.carpPosition[2] );
+
+
+
+			updatePhalange( tip, dip );
+			updatePhalange( dip, pip );
+			updatePhalange( pip, mcp );
+
+			if ( finger.type > 0 ) {
+
+				updatePhalange( mcp, carp );
+
+			}
+
+		};
+
+	};
+
+// Bone Method
+	var Fingerling = function() {
+
+		var fingerling = this;
+		var msg = fingerData.appendChild( document.createElement( 'div' ) );
+
+		var phalanges = [];
+
+		for (var i = 0; i < 4; i++) {
+			phalange = addPhalange();
+			phalanges.push( phalange )
+		}
+
+		fingerling.outputData = function( index, finger ) {
+
+		
+//console.log( finger );
+
+			for (var i = 0; i < 4; i++) {
+				bone = finger.bones[ i ];
+				cen = bone.center();
+				len = bone.length;
+
+				phalange = phalanges[ i ];
+				phalange.position.set( cen[0], cen[1], cen[2] );
+				if ( index > 0 || i > 0 ) {
+					phalange.scale.z = len;
+				}
+			}
+
+// Eventually will look at using bone.basis XYZ-axis data; Will it produce more concise code?
+  
+			phalanges[3].lookAt( v( finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2]  ) );
+			phalanges[2].lookAt( v( finger.dipPosition[0], finger.dipPosition[1], finger.dipPosition[2]  ) );
+			phalanges[1].lookAt( v( finger.pipPosition[0], finger.pipPosition[1], finger.pipPosition[2]  ) );
+			if ( index > 0 ) {
+				phalanges[0].lookAt( v( finger.mcpPosition[0], finger.mcpPosition[1], finger.mcpPosition[2]  ) );
+			}
+
+		};
+
+	};
+
+	function addPhalange() {
+
+		geometry = new THREE.BoxGeometry( 20, 20, 1 );
+		material = new THREE.MeshNormalMaterial();
+		phalange = new THREE.Mesh( geometry, material );
+		scene.add( phalange );
+		return phalange;
+
+	}
+
+	function updatePhalange( phalange, nextPhalange ) {
+
+			phalange.lookAt( nextPhalange.position );
+			length = phalange.position.distanceTo( nextPhalange.position );
+			phalange.translateZ( 0.5 * length );
+			phalange.scale.set( 1, 1, length );
+
+	}
+
+	function v(  x, y, z){ return new THREE.Vector3( x, y, z ); }
+
+
+  function distance(v1,center) {
+    return Math.floor(Math.sqrt(Math.pow(v1[0] - center[0], 2) + Math.pow(v1[1] - center[1], 2)+ Math.pow(v1[2] - center[2], 2)));
+ }
+
+
+
+	function compareGestureDebug(gc,captured)
+	{
+		var sd = 0;
+		if (gf.length != captured.length)
+			return 10000000000000;
+		for (var i = 0; i < gf.length;i++)
+		{
+			if ((gf[i] > captured[i])||(gc[i] < captured[i]))
+				sd++;
+
+		}
+		return sd;
+	}
+
+
+	function compareGesture(gesture,captured)
+	{
+		var sd = 0;
+		if (gesture.length != captured.length)
+			return 1000000;
+		for (var i = 0; i < gesture.length;i++)
+		{
+			sd += Math.abs(gesture[i] - captured[i]);
+
+		}
+		return sd;
+	}
+
+
+	function convertAndNormalize(v1,center)
+	{
+		var res = Array(3);
+
+		for (var i = 0; i < 3; i++)
+		{
+			res[i] = (v1[i]-center[i]);
+		}	
+		return res;	
+
+	}
+
+
+
+	
+
+
+	function nextTutorial()
+	{
+		changeTutorial(active_tutorial_index+1);
+	}
+
+	function previousTutorial()
+	{
+		changeTutorial(active_tutorial_index-1);
+	}
+
+
+	function changeTutorial(index)
+	{
+		if (test_done){
+			test_done = false;
+			active_tutorial_index = index;
+			var tutorial = document.getElementById('tutorial_Text');
+			var pic = document.getElementById('tutorial_pic');
+			tutorial.innerHTML = "Enter: " + tutorial_latters[active_tutorial_index] + "<br>";
+			pic.innerHTML = "<img src='" + tutorial_latters[active_tutorial_index] + ".jpg'><br>";
+		}
+	}
+
+
+
+
+// This allows us to move the cat even while in an iFrame.
+	Leap.loopController.setBackground(true)
+
+
+</script>
+</body>
+</html>
